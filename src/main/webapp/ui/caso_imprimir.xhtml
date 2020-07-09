@@ -1,0 +1,362 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"> 
+    <ui:define name="title">
+        Detalle del caso
+    </ui:define> 
+    <ui:define name="description">
+        <f:metadata>
+            <f:viewParam name="printcase" value="#{mbcaso.appCasoDetalle_View_Code}" />
+            <f:viewAction action="#{mbcaso.obtenerCaso()}" />
+        </f:metadata>
+        Detalle del caso
+        <small>Sistema de Seguimiento de Casos Legales</small>
+    </ui:define> 
+    <ui:define name="implementation"> 
+        <style>
+            .ui-widget {
+                font-size: 11px;
+            }
+            .ui-inputfield{
+                padding: 0px  !important; 
+            }
+            .textoingreso{
+                padding: 10px  !important; 
+            }
+            .ui-selectonemenu .ui-selectonemenu-trigger{ 
+                width: 25px !important; 
+            }
+            .iconofondono { 
+                border: 0px solid #ccc !important; 
+                background-color: transparent !important; 
+            }
+        </style>  
+
+        <h:form id="frmgrabar" enctype="multipart/form-data"> 
+            <p:growl id="message"  /> 
+            <div class="row" >
+                <div class="col-md-6"> 
+
+                    <c:set value="#{mbutiles.getanio()}" var="numanio"></c:set>  
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p:selectOneButton id="cboEstadoProceso"     value="#{mbcaso.appCasoDetalle_View.casoEstado}"   >
+                                <f:selectItems class="radio-inline radio-styled" value="${mbcatalogo.listarestadosdeCaso()}" var="cboestadoproc" itemLabel="${cboestadoproc.catDetadesc}" itemValue="${cboestadoproc.codCat}"/> 
+                            </p:selectOneButton> 
+                            <p:commandButton value="Actualizar" ajax="false" style="position: relative; z-index: 1012;"  update="message @parent" process="cbotipoProceso,idnumdoc,exp,cbomater,idjuzgado,cbotipoMoneda,cboDepend,input6,input7 @this" actionListener="#{mbcaso.grabarCasoPrint('U')}" styleClass="no-print" >
+
+                            </p:commandButton>
+
+                        </div> 
+                    </div> 
+                    <p></p>
+
+                    <div class="col-lg-6" style="margin-top: 10px;">
+                        Proceso
+                        <div class="input-group"> 
+                            <span class="input-group-addon">
+                                <i class="fa fa-university" aria-hidden="true"></i>
+                            </span>
+                            <p:selectOneMenu id="cbotipoProceso"  styleClass="form-control"    value="#{mbcaso.appCasoDetalle_View.casoTipoproceso}"   filter="true" filterMatchMode="startsWith" >
+                                <f:selectItem itemLabel="&#160;&#160;&#160;-- Seleccione Tipo --&#160;&#160;&#160;" itemValue="-100" noSelectionOption="true" class="disabled"/>
+                                <f:selectItems value="${mbcatalogo.listartipoprocesodeCaso()}"  var="cbotipodeproceso" itemLabel="${cbotipodeproceso.catDetadesc}" itemValue="${cbotipodeproceso.codCat}"/> 
+                            </p:selectOneMenu> 
+                        </div> 
+                    </div>
+
+                    <div class="col-lg-6" style="margin-top: 10px;">Número Expediente
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-book" aria-hidden="true"></i>
+                            </span>
+                            <p:inputText  styleClass="form-control textoingreso"  id="exp" value="${mbcaso.appCasoDetalle_View.casoExped}" readonly="false"  />                            
+                            <p:watermark for="exp" value="Nº Expediente" id="exp1" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6" style="margin-top: 10px;">Número Legajo
+                        <div class="input-group"> 
+                            <span class="input-group-addon">
+                                <i class="fa fa-file-text" aria-hidden="true"></i>
+                            </span> 
+                            <p:inputMask id="idnumdoc" styleClass="form-control textoingreso"   value="${mbcaso.appCasoDetalle_View.casoLegajo}" style="text-transform: uppercase" mask="a-9999-9999-aaa" readonly="false" />   
+                        </div> 
+                    </div>
+
+                    <div class="col-lg-6" style="margin-top: 10px;">Materia
+                        <div class="input-group"> 
+                            <span class="input-group-addon">
+                                <i class="fa fa-list" aria-hidden="true"></i>
+                            </span> 
+                            <p:selectOneMenu id="cbomater"  styleClass="form-control"    value="#{mbcaso.appCasoDetalle_View.casoMateria}"   filter="true" filterMatchMode="startsWith" >
+                                <f:selectItem itemLabel="&#160;&#160;&#160;-- Seleccione Tipo --&#160;&#160;&#160;" itemValue="-100" noSelectionOption="true" class="disabled"/>
+                                <f:selectItems value="${mbcatalogo.listarTipodeMateria()}" var="cbomater" itemLabel="${cbomater.catDetadesc}" itemValue="${cbomater.codCat}"/>
+                            </p:selectOneMenu>
+                        </div> 
+                    </div>
+
+                    <div class="col-lg-6" style="margin-top: 10px;">Dependencia
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-building" aria-hidden="true"></i>
+                            </span> 
+                            <p:selectOneMenu id="cboDepend"  styleClass="form-control"    value="#{mbcaso.appCasoDetalle_View.casoDependencia}"   filter="true" filterMatchMode="startsWith" >
+                                <f:selectItem itemLabel="&#160;&#160;&#160;-- Seleccione dependencia --&#160;&#160;&#160;" itemValue="-100" noSelectionOption="true" class="disabled"/>
+                                <f:selectItems value="${mbcatalogo.listartipoDepend()}" var="cbodepend" itemLabel="${cbodepend.catDetadesc}" itemValue="${cbodepend.catDeta}"/>
+                            </p:selectOneMenu>
+                        </div> 
+                    </div> 
+
+                    <div class="col-lg-6" style="margin-top: 10px;">Moneda
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-usd" aria-hidden="true"></i>
+                            </span> 
+                            <p:selectOneMenu id="cbotipoMoneda"  styleClass="form-control"    value="#{mbcaso.appCasoDetalle_View.casoMoneda}"   filter="true" filterMatchMode="startsWith" >
+                                <f:selectItem itemLabel="&#160;&#160;&#160;-- Seleccione tipo de moneda --&#160;&#160;&#160;" itemValue="-100" noSelectionOption="true" class="disabled"/>
+                                <f:selectItems value="${mbcatalogo.listartipoMoneda()}" var="cbotipomoneda" itemLabel="${cbotipomoneda.catDetadesc}" itemValue="${cbotipomoneda.catDeta}"/>
+                            </p:selectOneMenu>
+                        </div> 
+                    </div> 
+
+                    <div class="col-lg-6" style="margin-top: 10px;">Cuantía Demandada
+                        <div class="input-group"> 
+                            <span class="input-group-addon">
+                                <i class="fa fa-money" aria-hidden="true"></i>
+                            </span> 
+                            <p:inputText id="input6" value="#{mbcaso.appCasoDetalle_View.casoCuantia}"  styleClass="form-control textoingreso"   readonly="false"> 
+                            </p:inputText>
+                        </div> 
+                    </div> 
+
+                    <div class="col-lg-6" style="margin-top: 10px;">Monto Sentenciado
+                        <div class="input-group"> 
+                            <span class="input-group-addon">
+                                <i class="fa fa-money" aria-hidden="true"></i>
+                            </span> 
+                            <p:inputText id="input7" value="#{mbcaso.appCasoDetalle_View.casoMonto}"     styleClass="form-control textoingreso"   readonly="false"> 
+
+                            </p:inputText>
+
+                        </div> 
+                    </div> 
+
+                    <div class="col-lg-6" style="margin-top: 10px;">Juzgado/Tribunal Arbitral
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-balance-scale" aria-hidden="true"></i>
+                            </span> 
+                            <p:inputText   id="idjuzgado" value="${mbcaso.appCasoDetalle_View.casoJuzgado}" styleClass="form-control textoingreso"  readonly="false"/> 
+                            <p:watermark for="idjuzgado" value="Juzgado" id="idjuzgado1" />
+                        </div> 
+                    </div> 
+
+                    <div class="col-lg-6" style="margin-top: 10px;">&#160;
+                        <div class="input-group">
+
+                            <div style="height: 35px;width: 250px;"></div>
+                        </div> 
+                    </div>
+
+                    <div class="col-lg-6" style="margin-top: 10px;">Abogado
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                            </span> 
+                            <p:inputText   id="idabogado" value="${mbcaso.abogado}" styleClass="form-control textoingreso" maxlength="29"/> 
+                            <p:watermark for="idabogado" value="Abogado" id="idabogado1" />
+                        </div> 
+                    </div> 
+
+                    <div class="col-lg-6" style="margin-top: 10px;">
+                        <p:commandButton style="position: relative;top: 20px;" value="Agregar" update="message @parent" actionListener="#{mbcaso.agregarAbogados()}" styleClass="btn btn-flat btn-sm"  />
+                    </div>
+
+                    <div class="col-lg-12" style="margin-top: 25px; margin-bottom: 20px">
+                        <p:dataTable id="tbAbogado" var="abog" value="#{mbcaso.abogados}" emptyMessage="Ingresar abogados">
+                            <p:column style="width:120px;" headerText="Abogado">
+                                <h:outputText value="#{abog}" />
+                            </p:column>
+                            <p:column style="width:64px;text-align: center">
+                                <p:commandButton value="Eliminar" update="frmgrabar" actionListener="#{mbcaso.eliminarAbogado(abog,'U')}" styleClass="btn btn-flat btn-xs"  />
+                            </p:column>
+                        </p:dataTable>
+                    </div> 
+
+                    <div class="col-lg-6">Demandante
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <p:inputText maxlength="100" class="form-control"  id="iddemandante" value="${mbcaso.demandante}"    styleClass="form-control textoingreso" /> 
+                            <p:watermark for="iddemandante" value="Demandante" id="iddemandante1" />
+                        </div>
+                    </div> 
+                    <div class="col-lg-6">
+                        <p:commandButton style="position: relative;top: 20px;" value="Agregar" update="message @parent" actionListener="#{mbcaso.agregarDemandantes()}" styleClass="btn btn-flat btn-sm"  />
+                    </div>
+
+                    <div class="col-lg-12" style="margin-top: 25px; margin-bottom: 20px">
+                        <p:dataTable id="tbDemandante" var="dem1" value="#{mbcaso.demandantes}" emptyMessage="Ingresar demandantes">
+                            <p:column style="width:120px;" headerText="Demandante">
+                                <h:outputText value="#{dem1}" />
+                            </p:column>
+                            <p:column style="width:64px;text-align: center">
+                                <p:commandButton value="Eliminar" update="frmgrabar" actionListener="#{mbcaso.eliminarDemandante(dem1,'U')}" styleClass="btn btn-flat btn-xs" />
+                            </p:column>
+                        </p:dataTable>
+                    </div> 
+
+                    <div class="col-lg-6">Demandado
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <p:inputText maxlength="100" class="form-control"  id="iddemandado" value="${mbcaso.demandado}"  styleClass="form-control textoingreso" /> 
+                            <p:watermark for="iddemandado" value="Demandado" id="iddemandado1" />
+                        </div>
+                    </div> 
+
+                    <div class="col-lg-6" style="margin-top: 10px;">
+                        <p:commandButton style="position: relative;top: 20px;" value="Agregar" update="message @parent" actionListener="#{mbcaso.agregarDemandados()}" styleClass="btn btn-flat btn-sm"  />
+                    </div>
+
+                    <div class="col-lg-12" style="margin-top: 25px; margin-bottom: 20px">
+                        <p:dataTable id="tbDemandado" var="dem2" value="#{mbcaso.demandados}" emptyMessage="Ingresar demandados">
+                            <p:column style="width:120px;" headerText="Demandado">
+                                <h:outputText value="#{dem2}" />
+                            </p:column> 
+                            <p:column style="width:64px;text-align: center">
+                                <p:commandButton value="Eliminar" update="frmgrabar" actionListener="#{mbcaso.eliminarDemandado(dem2,'U')}" styleClass="btn btn-flat btn-xs" />
+                            </p:column>
+                        </p:dataTable>
+                    </div> 
+
+                    <div class="col-lg-12" style="margin-bottom: 20px">
+                        <p:panelGrid>
+                            <f:facet name="header">                                           
+                                <p:row>
+                                    <p:column>Documento</p:column>
+                                    <p:column>Ruta</p:column>
+                                    <p:column width="670px">Carga de documentos</p:column>
+                                </p:row>
+                            </f:facet>
+                            <p:row>
+                                <p:column>Documento 1</p:column>
+                                <p:column>
+                                    <c:if test="#{not empty mbcaso.appCasoDetalle_View.casoArchivo1}">
+                                        <p:commandButton style="width:90px;font-weight: bold;text-align: center;" actionListener="#{mbcaso.descargarFile}" value="Descargar" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                                            <p:fileDownload value="#{mbcaso.fileDownload}" />
+                                        </p:commandButton>
+                                    </c:if>
+                                </p:column>
+                                <p:column style="width:575px;font-weight: bold;text-align: center;">
+                                    <p:fileUpload value="#{mbcaso.file}" mode="simple" skinSimple="true" label="Cargar Documento"/>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>Documento 2</p:column>
+                                <p:column>
+                                    <c:if test="#{not empty mbcaso.appCasoDetalle_View.casoArchivo2}">
+                                        <p:commandButton style="width:90px;font-weight: bold;text-align: center;" actionListener="#{mbcaso.descargarFile2}" value="Descargar" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                                            <p:fileDownload value="#{mbcaso.fileDownload2}" />
+                                        </p:commandButton>
+                                    </c:if>
+                                </p:column>
+                                <p:column style="width:575px;font-weight: bold;text-align: center;">
+                                    <p:fileUpload value="#{mbcaso.file2}"  mode="simple" skinSimple="true" label="Cargar Documento"/>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>Documento 3</p:column>
+                                <p:column>
+                                    <c:if test="#{not empty mbcaso.appCasoDetalle_View.casoArchivo3}">
+                                        <p:commandButton style="width:90px;font-weight: bold;text-align: center;" actionListener="#{mbcaso.descargarFile3}" value="Descargar" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                                            <p:fileDownload value="#{mbcaso.fileDownload3}" />
+                                        </p:commandButton>
+                                    </c:if>
+                                </p:column>
+                                <p:column style="width:575px;font-weight: bold;text-align: center;">
+                                    <p:fileUpload value="#{mbcaso.file3}"  mode="simple"  skinSimple="true" label="Cargar Documento"/>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                    </div> 
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+                </div>
+
+                <div class="col-lg-12"> 
+                    <p:dataTable  rowIndexVar="rowId" var="inc" value="#{mbcaso.appCasoDetalle_View.appCasoIncidencias}" id="updateindiclist"
+                                  rowsPerPageTemplate="5,10,15"  paginator="true"  
+                                  paginatorTemplate="{Registro de incidencias} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                  tableStyle="table-layout: auto; "  reflow="true" 
+                                  emptyMessage="Registro de Incidencias"
+                                  sortBy="#{inc.casoCod}" 
+                                  >
+                        <f:facet name="{Exporters}">
+                            <h:commandLink>
+                                <i class="fa fa-file-text fa-lg text-green" aria-hidden="true"></i> 
+                                <p:graphicImage width="24"/>
+                                <p:dataExporter type="xls" target="updateindiclist" fileName="Seguimiento de Casos UAJ" postProcessor="#{mbexportador.postExportarXLS}"/>
+                            </h:commandLink>
+
+
+                        </f:facet>
+                        <p:column headerText="N° " exportable="false">
+                            #{rowId+1}
+                        </p:column>
+
+                        <p:column headerText="Incidencia">
+                            <p:outputLabel value="${inc.incDes}"></p:outputLabel>
+                        </p:column>
+
+                        <p:column headerText="Alertas" class="text-center">
+
+                            <p:outputLabel value="#{inc.incAlrtDat1}" rendered="#{inc.incAlrtDat2 != null}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/> 
+                            </p:outputLabel >  
+                            <p:outputLabel value=" - " rendered="#{inc.incAlrtDat2 != null}"/>
+                            <p:outputLabel value=" No Registra " rendered="#{inc.incAlrtDat2 == null}"/>
+
+                            <p:outputLabel value="#{inc.incAlrtDat2}" rendered="#{inc.incAlrtDat2 != null}">
+                                <f:convertDateTime pattern="dd/MM/YYYY"/> 
+                            </p:outputLabel>
+
+
+
+                        </p:column> 
+                        <p:column headerText="Estado">
+                            <p:outputLabel value="Activo" rendered="${inc.incFlag != 0 }" />
+                            <p:outputLabel value="Inactivo" rendered="${inc.incFlag == 0 }" />
+                        </p:column> 
+                    </p:dataTable>
+                    <br></br>
+                    <p:commandButton  styleClass=" no-print" value=" &#160; ENVIAR COPIA " type="button" onclick="PF('dlg1').show();" icon="fa fa-envelope-o fa-lg"/>
+
+                    <br></br>
+                    <a href='javascript:window.print(); void 0;' class="btn btn-primary pull-right no-print"><i class="glyphicon glyphicon-print"></i> Imprimir</a> 
+                    <p:dialog  header="ENVIAR COPIA"  widgetVar="dlg1"  modal="true" showEffect="fade" hideEffect="fade" resizable="true">
+                        <center>
+                            <p:inputText style="width: 180px" value="#{mbmail.para}"  placeholder="Correo" />
+                        </center>
+                        <br></br><br></br>
+                        <p:commandButton 
+                            styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-primary btn-block btn-flat bg-blue border-left border-right"  
+                            value="ENVIAR EMAIL"
+                            update="message @parent"
+                            icon="fa fa-envelope-o fa-lg"
+                            action="#{mbmail.enviarCorreo(mbmail.cabecera, mbmail.cuerpo,mbcaso.appCasoDetalle_View_Code)}" />
+
+                    </p:dialog>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+    <ui:define name="source">
+
+    </ui:define> 
+</ui:composition>

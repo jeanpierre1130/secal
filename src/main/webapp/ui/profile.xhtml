@@ -1,0 +1,212 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                template="/WEB-INF/template.xhtml"
+
+                xmlns:jsf="http://xmlns.jcp.org/jsf"> 
+    <ui:define name="title">
+        Listar Casos
+    </ui:define> 
+    <ui:define name="description">
+        Listado de Casos
+        <small>Sistema de Seguimiento de Casos Legales</small>
+    </ui:define> 
+    <ui:define name="implementation"> 
+        <style>
+
+            .ui-widget {
+                font-size: 11px;
+            }
+
+
+
+        </style> 
+        <h:form> 
+
+
+
+
+
+            <!-- Main content -->
+
+
+            <div class="row">
+                <div class="col-md-3">
+
+                    <!-- Profile Image -->
+                    <div class="box box-primary">
+                        <div class="box-body box-profile">
+                            <img class="profile-user-img img-responsive img-circle" src="${sessionScope.s_user.appPersona.perImgURL}" alt="User profile picture"/>
+
+                            <h3 class="profile-username text-center">${sessionScope.s_user.appPersona.perFullname}</h3>
+
+                            <p class="text-muted text-center">${sessionScope.s_user.appPersona.perArea}</p>
+
+                            <!--                            <ul class="list-group list-group-unbordered">
+                                                            <li class="list-group-item">
+                                                                <b>Followers</b> <a class="pull-right">1,322</a>
+                                                            </li>
+                                                            <li class="list-group-item">
+                                                                <b>Following</b> <a class="pull-right">543</a>
+                                                            </li>
+                                                            <li class="list-group-item">
+                                                                <b>Friends</b> <a class="pull-right">13,287</a>
+                                                            </li>
+                                                        </ul>-->
+
+                           <!-- <a href="#settings" data-toggle="tab" class="btn btn-primary btn-block"><b>Actualizar Perfil</b></a> -->
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+
+                    <!-- About Me Box -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">About Me</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body"> 
+
+                            <hr></hr>
+
+                            <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
+
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-9">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+
+                            <li class="active"><a href="#timeline" data-toggle="tab">Linea de Tiempo</a></li>
+                            <li><a href="#settings" data-toggle="tab">Settings</a></li>
+                        </ul>
+                        <div class="tab-content">
+
+
+                            <div class="active tab-pane" id="timeline">
+                                <!-- The timeline -->
+                                <ul class="timeline timeline-inverse">
+
+                                    <c:forEach var="fechacabecera" items="#{mblog.listaLogUsuariobydata(sessionScope.s_user.usrId)}">
+                                        <h:panelGroup rendered="#{fechacabecera != null}">  
+                                            <li class="time-label">
+                                                <span class="bg-red"> 
+                                                    <p:outputLabel value="${fechacabecera}"  >
+                                                        <f:convertDateTime type="date" dateStyle="default"   timeZone="America/Lima"  locale="es_PE" />
+                                                    </p:outputLabel> 
+                                                </span>
+                                            </li>
+                                        </h:panelGroup>
+
+
+                                        <ui:repeat value="#{mblog.listaLogUsuariosub2(sessionScope.s_user.usrId, fechacabecera)}" var="loguserd"  >
+
+                                            <li>
+                                                <h:panelGroup rendered="#{loguserd.logTipo eq  'Acceso' }">  
+                                                    <i class="fa fa-user bg-aqua"></i>
+
+                                                </h:panelGroup>
+
+                                                <h:panelGroup rendered="#{loguserd.logTipo eq  'Caso' }">  
+                                                    <i class="fa fa-list bg-yellow"></i>
+
+                                                </h:panelGroup>
+
+                                                <h:panelGroup rendered="#{loguserd.logTipo eq  'Caso/Incidencia' }">  
+                                                    <i class="fa fa-comments bg-yellow"></i>
+                                                </h:panelGroup>
+                                                <h:panelGroup rendered="#{loguserd.logTipo eq  'Catálogo' }">  
+                                                    <i class="fa fa-cubes bg-green"></i> 
+                                                </h:panelGroup>
+
+                                                <h:panelGroup rendered="#{loguserd.logTipo eq  'Exportar' }">  
+                                                    <i class="fa fa-file-text-o bg-red"></i> 
+                                                </h:panelGroup>
+
+                                                <h:panelGroup rendered="#{loguserd.logTipo eq  'Correo' }">  
+                                                    <i class="fa fa-envelope-o bg-green"></i> 
+                                                </h:panelGroup>
+
+
+
+
+                                                <div class="timeline-item">
+                                                    <span class="time"> <i class="fa fa-clock-o"> </i>  
+                                                        <p:spacer/> <p:spacer/>
+                                                        <h:outputText value="${loguserd.logData}">
+                                                            <f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm:ss" />
+                                                        </h:outputText>
+                                                    </span>
+
+                                                    <h3 class="timeline-header"><a href="#">${loguserd.logTipo}</a> alt</h3>
+
+                                                    <div class="timeline-body">
+                                                        ${loguserd.logAcion}
+                                                    </div>
+                                                    <div class="timeline-footer">
+                                                        <a class="btn btn-primary btn-xs">Detalles</a>
+
+                                                    </div>
+                                                </div>
+                                            </li>
+
+
+                                        </ui:repeat>
+
+                                    </c:forEach>
+
+
+
+                                    <li class="time-label">
+                                        <span class="bg-red"><!-- Titulo-->
+                                            <p:outputLabel value="${loguser.logData}" >
+                                                <f:convertDateTime type="both" dateStyle="short" timeZone="PET"  locale="es_PE" />
+                                            </p:outputLabel> 
+                                        </span>
+                                    </li>
+
+
+
+
+                                </ul>
+                            </div>
+                            <!-- /.tab-pane -->
+
+                            <div class="tab-pane" id="settings">
+                                sdsd
+                            </div>
+                            <!-- /.tab-pane -->
+                        </div>
+                        <!-- /.tab-content -->
+                    </div>
+                    <!-- /.nav-tabs-custom -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
+            <center>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" header="sdsd" style="white-space: pre;" styleClass="center" closable="false" dir="ltr"  > 
+
+                    <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+
+                </p:confirmDialog>
+            </center>
+        </h:form>
+
+
+    </ui:define>
+    <ui:define name="source">
+
+    </ui:define> 
+</ui:composition>

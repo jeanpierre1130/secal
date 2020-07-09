@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                template="/WEB-INF/template_layout.xhtml"
+                > 
+
+    <ui:define name="implementation"> 
+        <c:if test="#{sessionScope.s_user!=null}">  
+            <script type="text/javascript">
+                window.location.href = "#{request.contextPath}/ui/listarcasos.xhtml"
+            </script>
+            
+        </c:if>
+        <div class="login-box">
+            <div class="login-logo">
+                <img src="https://www.apn.gob.pe/site/files/URRI34534534583945898934857345/logo_mtc_apn.jpg" width="100%" />
+                <!--<img src="http://indicadores.apn.gob.pe:8080/qlikview/images/logotipo_apn.jpg"    /> -->
+            </div>
+            <!-- /.login-logo -->
+            <div class="login-box-body">
+                <p class="login-box-msg">SISTEMA DE SEGUIMIENTO DE CASOS LEGALES</p>
+                <h:form class="form-hhorizontal"  >
+                    <p:growl id="growl" sticky="true" showDetail="true" life="3000" /> 
+                    <div class="form-group has-feedback">
+                        <p:inputText styleClass="form-control" value="${mbacceso.appUser.usrUsername}" />
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <p:password styleClass="form-control" value="${mbacceso.appUser.usrPassword}" />
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <p:captcha label="Captcha" language="es">
+                            
+                            
+                        </p:captcha>
+                    </div>
+                    <div style="margin-bottom: 5px;">
+                        <a href="http://10.0.0.35:8280/useradmin/" target="_blank"><u>Cambiar contraseña</u></a>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <div class="checkbox icheck">
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-xs-4">
+                            <style>
+                                .ui-button, button.ui-button.ui-state-default, .ui-button.ui-state-default{
+                                    border: none !important;
+                                }
+                            </style>
+                            <p:commandButton 
+                                action="#{mbacceso.validarUsuario()}" 
+                                class="btn btn-danger bg bg-red-gradient border-left btn-block btn-flat"  
+                                ajax="false"
+                                value="Ingresar"  
+                                style="text-align: center"
+                                /> 
+                            <!-- /.col -->
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+            <!-- /.login-box-body -->
+        </div>
+    </ui:define>
+</ui:composition>

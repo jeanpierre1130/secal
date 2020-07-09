@@ -1,0 +1,33 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                template="/WEB-INF/template_layout.xhtml"
+                > 
+
+    <ui:define name="implementation"> 
+        <div class="error-page">
+            <h2 class="headline text-yellow"> 404</h2>
+            <div class="error-content">
+                <h3><i class="fa fa-warning text-yellow"></i> Oops! Página no encontrada.</h3>
+                <p>
+                    Contenido no encontrado
+                    Notifique al Administrador de Sistemas <a href="#{request.contextPath}/index.xhtml">Ingresar al sistema</a> 
+                </p>
+
+                <form class="search-form">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Search"/>
+
+                            <div class="input-group-btn">
+                                <button type="submit" name="submit" class="btn btn-warning btn-flat"><i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

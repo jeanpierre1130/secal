@@ -1,0 +1,31 @@
+<!DOCTYPE html [
+    <!ENTITY nbsp "&#160;">
+    <!ENTITY bull "&#8226;">
+    <!ENTITY copy "&#169;">
+    ]>
+    <html xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:ui="http://java.sun.com/jsf/facelets"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:pe="http://primefaces.org/ui/extensions"
+          xmlns:p="http://primefaces.org/ui"> 
+        <h:head>
+            <title>Autoridad Portuaria Nacional</title>
+            <!-- Bootstrap core CSS --> 
+            <link rel="stylesheet" type="text/css"
+                  href="#{request.contextPath}/resources/bootstrap/css/bootstrap.min.css" />
+            <link rel="stylesheet" type="text/css"
+                  href="#{request.contextPath}/resources/dist/css/AdminLTE.min.css" />
+            <link rel="stylesheet" type="text/css"
+                  href="#{request.contextPath}/resources/dist/css/skins/skin-red.min.css" />
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+            <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>  
+        </h:head>
+        <h:body class="hold-transition login-page" > 
+            <ui:insert name="implementation"> 
+                AQUI CONTENIDO DE FORMULARIO DE INICIO DE SESION
+            </ui:insert> 
+            <script type="text/javascript" src="#{request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
+            <script type="text/javascript" src="#{request.contextPath}/resources/dist/js/app.min.js"></script>
+        </h:body> 
+    </html>

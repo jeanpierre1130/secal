@@ -1,0 +1,24 @@
+<p:dataTable id="cars1" var="doc" value="#{mbmantenimiento.appTipodeDoc_View}" editable="true" style="margin-bottom:20px">
+                <f:facet name="header">
+                    Row Editing
+                </f:facet>
+
+                <p:ajax event="rowEdit" listener="#{mbmantenimiento.onRowEdit}" update=":form:msgs" />
+                <p:ajax event="rowEditCancel" listener="#{mbmantenimiento.onRowCancel}" update=":form:msgs" />
+
+                <p:column headerText="Id">
+                    <h:outputText value="#{doc.codCat}" /> 
+                </p:column>
+
+                <p:column headerText="Year">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{doc.catDetadesc}" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{doc.catDetadesc}" style="width:100%" label="Year"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+
+                <p:column style="width:32px">
+                    <p:rowEditor />
+                </p:column>
+            </p:dataTable>

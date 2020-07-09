@@ -1,0 +1,179 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                template="/WEB-INF/template.xhtml"
+
+                xmlns:jsf="http://xmlns.jcp.org/jsf"> 
+    <ui:define name="title">
+        Historial de todos los usuarios
+    </ui:define> 
+    <ui:define name="description">
+        Historial de todos los usuarios
+        <small>Sistema de Seguimiento de Casos Legales</small>
+    </ui:define> 
+    <ui:define name="implementation"> 
+        <style>
+            .ui-widget {
+                font-size: 11px;
+            }
+        </style> 
+        <h:form rendered="#{sessionScope.s_superrrot == null}"> 
+            ! No tiene permiso para acceder a esta opcion, intento registrado.
+        </h:form>
+        <h:form rendered="#{sessionScope.s_superrrot}"> 
+
+
+            <div class="row" >
+                <div class="col-md-4"  > 
+                    <p:growl id="message" sticky="true" showDetail="false" life="3000" autoUpdate="true" /> 
+                    <div class="row">
+                        <div class="col-lg-12" style="margin-bottom: 8px">
+                            Nombre completo
+                            <div class="input-group"> 
+                                <span class="input-group-addon">
+                                    <i class="fa fa-list" aria-hidden="true"></i>
+                                </span>
+
+                                <p:inputText   styleClass="form-control textoingreso"    value="${mbmantenimiento.appPersona_edit.perFullname}"  readonly="${!mbmantenimiento.btn_edit}" > 
+                                    <p:keyFilter regEx="/[a-z_ ]/i"/>
+                                </p:inputText>
+                            </div> 
+                        </div>
+                        <!-- /.col-lg-6 -->
+                        <div class="col-lg-6" style="margin-bottom: 8px">Usuario
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                </span>
+                                <p:inputText  styleClass="form-control textoingreso"   value="${mbmantenimiento.appUser_edit.usrUsername}"   readonly="${mbmantenimiento.btn_edit_new}"  >
+                                    <p:keyFilter regEx="/[a-z_ ]/i"/>
+                                </p:inputText>
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+
+
+                        <div class="col-lg-6" style="margin-bottom: 8px">Contraseña (nueva contraseña)
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                </span>
+                                <p:password  styleClass="form-control textoingreso"   value="${mbmantenimiento.password_edit}"  readonly="true"   />
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+                        <!-- /.col-lg-6 -->
+                    </div> 
+                    <div class="row">
+                        <div class="col-lg-12" style="margin-bottom: 8px">Correo
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
+                                <p:inputText  styleClass="form-control textoingreso"   value="${mbmantenimiento.appPersona_edit.perEmail}"  readonly="${!mbmantenimiento.btn_edit}"  />
+                            </div>
+                        </div> 
+                        <div class="col-lg-12" style="margin-bottom: 8px">Área
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-briefcase"></i></span>
+                                <p:selectOneMenu id="cboArea"  styleClass="form-control" disabled="${!mbmantenimiento.btn_edit}" value="#{mbmantenimiento.appPersona_edit.perArea}"   filter="true" filterMatchMode="startsWith" >
+                                    <f:selectItem itemLabel="&#160;&#160;&#160;-- Seleccione el àrea --&#160;&#160;&#160;" itemValue="-100" noSelectionOption="true" class="disabled"/>
+                                    <f:selectItems value="${mbcatalogo.listartipoArea()}"  var="cboarea" itemLabel="${cboarea.catDetadesc}" itemValue="${cboarea.catDetadesc}"/> 
+                                </p:selectOneMenu> 
+                            </div>
+                        </div> 
+                        <div class="col-lg-12" style="margin-bottom: 8px">Estado
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-list" aria-hidden="true"></i>
+                                </span>
+                                <p:selectOneMenu id="cbotipoEstado"  styleClass="form-control" disabled="${!mbmantenimiento.btn_edit}" value="#{mbmantenimiento.appUser_edit.usrEstado}"   filter="true" filterMatchMode="startsWith" >
+                                    <f:selectItem itemLabel="&#160;&#160;&#160;-- Seleccione estado --&#160;&#160;&#160;" itemValue="-100" noSelectionOption="true" class="disabled"/>
+                                    <f:selectItems value="${mbcatalogo.listartipoEstado()}"  var="cbotipoestado" itemLabel="${cbotipoestado.catDetadesc}" itemValue="${cbotipoestado.catDeta}"/> 
+                                </p:selectOneMenu> 
+                            </div>
+                        </div> 
+                    </div> 
+                    <p> </p>
+
+
+                    <p></p>
+
+                    <p:commandButton  update="message @parent"  actionListener="${mbmantenimiento.grabarUsuario()}" rendered="${mbmantenimiento.btn_edit == true}" styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-primary btn-block btn-flat bg-blue border-left border-right"  value="GRABAR "    >
+                        <p:confirm   /> 
+                    </p:commandButton> 
+
+
+
+
+                </div>
+                <div class="col-md-8"> 
+                    <p:dataTable  rowIndexVar="rowId" var="inc" value="#{mbmantenimiento.listarUsuarios()}" id="updateindiclist"
+                                  rowsPerPageTemplate="5,10,15"  paginator="true"  
+                                  paginatorTemplate="{Usuarios} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                  tableStyle="table-layout: auto; "  reflow="true" 
+                                  sortBy="#{inc.usrId}" 
+                                  >
+                        <f:facet name="{Exporters}">
+
+                            <p:commandButton actionListener="${mbmantenimiento.nuevoUsuario()}" value="Nuevo"  ajax="false"   />
+
+
+
+                        </f:facet>
+                        <p:column headerText="#">
+                            #{rowId+1}
+                        </p:column>
+
+                        <p:column headerText="Usuario">
+                            <p:outputLabel value="${inc.usrUsername}"></p:outputLabel>
+                        </p:column>
+
+                        <p:column headerText="Nombre completo">
+                            <p:outputLabel value="${inc.appPersona.perFullname}"></p:outputLabel>
+                        </p:column>
+
+                        <p:column headerText="Nombre Email">
+                            <p:outputLabel value="${inc.appPersona.perEmail}"></p:outputLabel>
+                        </p:column>
+
+                        <p:column headerText="Área">
+                            <p:outputLabel value="${inc.appPersona.perArea}"></p:outputLabel>
+                        </p:column>
+
+                        <p:column headerText="Opción">
+                            <p:commandButton actionListener="${mbmantenimiento.obtenerUsuario(inc.usrId)}" value="Editar"  ajax="false"   />
+                        </p:column>
+
+
+
+                        <p:column headerText="Tipo">
+                            <p:outputLabel value="Super Admnistrador" rendered="${inc.usrEstado == 10 }" />
+                            <p:outputLabel value="Admnistrador" rendered="${inc.usrEstado == 9 }" />
+                            <p:outputLabel value="Inactivo" rendered="${inc.usrEstado == 0 }" />
+                            <p:outputLabel value="Usuario" rendered="${inc.usrEstado == 1 }" />
+                        </p:column> 
+                    </p:dataTable>
+                </div>
+            </div>
+
+
+            <center>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade"   styleClass="center" closable="false" dir="ltr"  > 
+                    <f:facet name="message">
+                        <h:outputText value="Está seguro que &lt;br/&gt; desea grabar" escape="false" />
+                    </f:facet>
+                    <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+
+                </p:confirmDialog>
+            </center>
+        </h:form>
+
+
+    </ui:define>
+    <ui:define name="source">
+
+    </ui:define> 
+</ui:composition>

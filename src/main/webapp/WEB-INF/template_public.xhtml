@@ -1,0 +1,105 @@
+<!DOCTYPE html [
+    <!ENTITY nbsp "&#160;">
+    <!ENTITY bull "&#8226;">
+    <!ENTITY copy "&#169;">
+    ]>
+    <html xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:ui="http://java.sun.com/jsf/facelets"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:pe="http://primefaces.org/ui/extensions"
+          xmlns:p="http://primefaces.org/ui"
+          xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+        <h:head>
+            <title>Autoridad Portuaria Nacional</title>
+            <link rel="stylesheet" type="text/css"
+                  href="#{request.contextPath}/resources/bootstrap/css/bootstrap.min.css" />
+            <link rel="stylesheet" type="text/css"
+                  href="#{request.contextPath}/resources/dist/css/AdminLTE.min.css" />
+            <link rel="stylesheet" type="text/css"
+                  href="#{request.contextPath}/resources/dist/css/skins/skin-blue.min.css" />
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+            <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/> 
+        </h:head>
+        <h:body class="hold-transition skin-blue layout-top-nav">
+            <c:if test="#{sessionScope.s_user==null}">  
+                <script type="text/javascript">
+                </script>
+            </c:if>
+
+            <style>
+                .ui-growl-icon-close {
+                    cursor: pointer;
+                    position: absolute;
+                    left: 335px;
+                    top: 15px;
+                }
+
+                .ui-growl {   
+                    position:fixed;
+                    top: 60px;
+                    left: 37%;
+                    width: 360px;
+                    height: 110px;
+                    z-index:9999; 
+                }
+                body:after {
+                 /* content: "COPIA / APN"; */
+                    font-size: 5em;  
+                    color: #fcd3d3;
+                    z-index: 9999;
+                    
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: fixed;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+
+                    -webkit-pointer-events: none;
+                    -moz-pointer-events: none;
+                    -ms-pointer-events: none;
+                    -o-pointer-events: none;
+                    pointer-events: none;
+
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    -o-user-select: none;
+                    user-select: none;
+                }
+            </style>
+
+            <div class="wrapper">
+                <div class="content-wrapper">
+                    <div class="container">
+                        <section class="content-header">
+                            <h1>
+                                <ui:insert name="description">
+                                    Page Header
+                                    <small>Sistema de Seguimiento de Casos Legales</small>
+                                </ui:insert>
+                            </h1>
+                            <ol class="breadcrumb">
+                            </ol>
+                        </section>
+                        <section class="content">
+                            <ui:insert name="implementation">
+                                <p:editor/>
+                            </ui:insert>
+
+                            <span class="floatLeft fontSize14 gray"><a href="http://www.apn.gob.pe">Autoridad Portuaria Nacional</a>, Copyright &copy; 2018. Todos lo Derechos Reservados.</span>
+                        </section>
+                    </div>
+                </div>
+                <footer class="main-footer">
+                </footer>
+            </div>
+            <script type="text/javascript" src="#{request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
+            <script type="text/javascript" src="#{request.contextPath}/resources/dist/js/app.min.js"></script>
+        </h:body>
+    </html>

@@ -1,0 +1,172 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"> 
+    <ui:define name="title">
+        Listar Casos
+    </ui:define> 
+    <ui:define name="description">
+
+    </ui:define> 
+    <ui:define name="implementation"> 
+        <h:form id="form">
+
+            <p:growl id="msgs" showDetail="true"/>
+
+
+
+            <p:contextMenu for="tipodoc" widgetVar="cDocs">   
+                <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellDocs').showCellEditor();return false;"/>  
+                <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cDocs').hide()"/>  
+            </p:contextMenu> 
+
+            <p:contextMenu for="viaproc" widgetVar="cVia">   
+                <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellVias').showCellEditor();return false;"/>  
+                <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cVia').hide()"/>  
+            </p:contextMenu> 
+          
+
+            <p:separator></p:separator>
+
+            <div class="ui-g">
+
+
+                <div class="ui-g-12 ui-md-6 ui-lg-6"> 
+                    <p:dataTable id="tipodoc" var="tipodoc" value="#{mbmantenimiento.appTipodeDoc_View}" editable="true" editMode="cell" widgetVar="cellDocs">
+                        <f:facet name="header"> Gestionar Tipo de Documento </f:facet>
+                        <p:ajax event="cellEdit" listener="#{mbmantenimiento.onCellEdit}" update=":form:msgs" /> 
+                        <p:column headerText="Id" visible="false">  <h:outputText value="#{tipodoc.codCat}" /></p:column> 
+                        <p:column headerText="Descripción">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{tipodoc.catDetadesc}" /></f:facet>
+                                <f:facet name="input"><p:inputText value="#{tipodoc.catDetadesc}" style="width:96%" label="Year"/></f:facet>
+                            </p:cellEditor>
+                        </p:column> 
+                        <p:column headerText="Formato">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{tipodoc.catDetaformato}" /></f:facet>
+                                <f:facet name="input"><p:inputText value="#{tipodoc.catDetaformato}" style="width:96%" label="Year"/></f:facet>
+                            </p:cellEditor>
+                        </p:column> 
+
+                        <p:column headerText="Style">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{tipodoc.catDetaStyle}" /></f:facet>
+                                <f:facet name="input"><p:inputText value="#{tipodoc.catDetaStyle}" style="width:96%" label="Year"/></f:facet>
+                            </p:cellEditor>
+                        </p:column> 
+
+
+                    </p:dataTable>
+                </div>
+
+
+
+                <div class="ui-g-12 ui-md-6 ui-lg-6"> 
+                    <p:dataTable id="tipoproc" var="tipoproc" value="#{mbmantenimiento.appTipoProceso_View}" editable="true" editMode="cell" widgetVar="celltipoproc">
+                        <f:facet name="header"> Gestionar Tipo de Proceso </f:facet>
+                        <p:ajax event="cellEdit" listener="#{mbmantenimiento.onCellEdit}" update=":form:msgs" /> 
+                        <p:column headerText="Id" visible="false">  <h:outputText value="#{tipoproc.codCat}" /></p:column> 
+                        <p:column headerText="Descripción">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{tipoproc.catDetadesc}" /></f:facet>
+                                <f:facet name="input"><p:inputText value="#{tipoproc.catDetadesc}" style="width:96%" label="Year"/></f:facet>
+                            </p:cellEditor>
+                        </p:column> 
+                        <p:column headerText="Formato">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{tipoproc.catDetaformato}" /></f:facet>
+                                <f:facet name="input"><p:inputText value="#{tipoproc.catDetaformato}" style="width:96%" label="Year"/></f:facet>
+                            </p:cellEditor>
+                        </p:column> 
+
+                        <p:column headerText="Style">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{tipoproc.catDetaStyle}" /></f:facet>
+                                <f:facet name="input"><p:inputText value="#{tipoproc.catDetaStyle}" style="width:96%" label="Year"/></f:facet>
+                            </p:cellEditor>
+                        </p:column> 
+
+
+                    </p:dataTable>
+                </div>
+
+
+
+                <div class="ui-g-12 ui-md-6 ui-lg-6"> 
+                    <p:dataTable id="tipoestproc" var="tipoestproc" value="#{mbmantenimiento.appEstadoProceo_View}" editable="true" editMode="cell" widgetVar="celltipoestproc">
+                        <f:facet name="header"> Gestionar Estado de Proceso </f:facet>
+                        <p:ajax event="cellEdit" listener="#{mbmantenimiento.onCellEdit}" update=":form:msgs" /> 
+                        <p:column headerText="Id" visible="false">  <h:outputText value="#{tipoestproc.codCat}" /></p:column> 
+                        <p:column headerText="Descripción">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{tipoestproc.catDetadesc}" /></f:facet>
+                                <f:facet name="input"><p:inputText value="#{tipoestproc.catDetadesc}" style="width:96%" label="Year"/></f:facet>
+                            </p:cellEditor>
+                        </p:column> 
+
+
+                        <p:column headerText="Style">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{tipoestproc.catDetaStyle}" /></f:facet>
+                                <f:facet name="input"><p:inputText value="#{tipoestproc.catDetaStyle}" style="width:96%" label="Year"/></f:facet>
+                            </p:cellEditor>
+                        </p:column> 
+
+                        <p:column headerText="Visibilidad"> 
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{tipoestproc.catDetaestado}" /></f:facet>
+                                <f:facet name="input">
+                                    <h:selectOneMenu value="#{tipoestproc.catDetaestado}"  style="width:100%">
+                                        <f:selectItem itemLabel="Visible" itemValue="1" />
+                                        <f:selectItem itemLabel="Oculto" itemValue="0" />
+                                    </h:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+
+                        </p:column> 
+                    </p:dataTable>
+                </div>
+
+
+
+
+            </div>
+
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-6 ui-lg-3"> 
+                    <p:dataTable id="viaproc" var="viaproc" value="#{mbmantenimiento.appviaProc_View}" editable="true" editMode="cell" widgetVar="cellVias">
+                        <f:facet name="header"> Gestionar via Procedimental </f:facet> 
+                        <p:ajax event="cellEdit" listener="#{mbmantenimiento.onCellEdit}" update=":form:msgs" /> 
+                        <p:column headerText="Id" visible="false">  <h:outputText value="#{viaproc.codCat}" /></p:column> 
+                        <p:column headerText="Descripción">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{viaproc.catDetadesc}" /></f:facet>
+                                <f:facet name="input"><p:inputText value="#{viaproc.catDetadesc}" style="width:96%" label="Year"/></f:facet>
+                            </p:cellEditor>
+                        </p:column> 
+
+
+                        <p:column headerText="Visibilidad">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{viaproc.catDetaestado}" /></f:facet>
+                                <f:facet name="input"><p:inputText value="#{viaproc.catDetaestado}" style="width:96%" label="Year"/></f:facet>
+                            </p:cellEditor>
+                        </p:column> 
+                    </p:dataTable>
+                </div>
+            </div>
+
+
+
+
+           
+        </h:form>
+    </ui:define>
+    <ui:define name="source">
+
+    </ui:define> 
+</ui:composition>
